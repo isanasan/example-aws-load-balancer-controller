@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: sample-httpd-ns
+  name: sample-ingress-group
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: ingress-group-sample
+    alb.ingress.kubernetes.io/load-balancer-name: example-ingress-group
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+        - path: /httpd
+          pathType: Prefix
+          backend:
+            service:
+              name: service-sample-httpd
+              port:
+                number: 80
